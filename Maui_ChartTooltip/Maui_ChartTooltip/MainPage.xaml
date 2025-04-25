@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             xmlns:local="clr-namespace:Maui_ChartTooltip"
+             x:Class="Maui_ChartTooltip.MainPage">
+
+    <Grid>
+        <chart:SfCartesianChart>
+            <chart:SfCartesianChart.BindingContext>
+                <local:ViewModel/>
+            </chart:SfCartesianChart.BindingContext>
+
+            <chart:SfCartesianChart.Title>
+                <Label Text="Population Growth" HorizontalTextAlignment="Center"/>
+            </chart:SfCartesianChart.Title>
+
+            <chart:SfCartesianChart.Resources>
+                <ResourceDictionary>
+                    <DataTemplate x:Key="tooltipTemplate">
+                        <HorizontalStackLayout>
+                            <!--Template has BindingContext as its Segment named Item. From it, you can access the corresponding Model data-->
+                            <Label Text="{Binding Item.Country}" TextColor="White" FontSize="12"/>
+                            <Label Text=" : " TextColor="White" FontSize="12"/>
+                            <Label Text="{Binding Item.Population}" TextColor="White" FontSize="12"/>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </ResourceDictionary>
+            </chart:SfCartesianChart.Resources>
+
+            <chart:SfCartesianChart.XAxes>
+                <chart:CategoryAxis/>
+            </chart:SfCartesianChart.XAxes>
+
+            <chart:SfCartesianChart.YAxes>
+                <chart:NumericalAxis/>
+            </chart:SfCartesianChart.YAxes>
+
+            <chart:ColumnSeries ItemsSource="{Binding Data}"
+                            XBindingPath="Country" YBindingPath="Population"
+                            EnableTooltip="True"
+                            TooltipTemplate="{StaticResource tooltipTemplate}">
+            </chart:ColumnSeries>
+        </chart:SfCartesianChart>
+    </Grid>
+
+</ContentPage>
